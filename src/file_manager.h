@@ -22,7 +22,7 @@ public:
     T* obj;
     Instance()->file_->GetObject(name.c_str(), obj);
     if( !obj )
-      throw std::runtime_error("FileManager::GetObject(): not object named "+name+" in file");
+      throw std::runtime_error("FileManager::GetObject(): there is no object named "+name+" in file");
     return obj;
   }
   static void Cd( const std::string& directory ){

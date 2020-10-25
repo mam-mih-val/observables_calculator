@@ -20,6 +20,10 @@ void MethodOf3SE::CalculateObservables(){
     combinations_names_.push_back( q_vector_name_+" ( "+res_combination_names.at(2).first+" , "+res_combination_names.at(2).second+" )" );
     resolutions_.push_back( CalculateResolution( set_for_res_calc ) );
   }
+  auto uq_correlation = ReadContainerFromFile( uq_directory_, std::pair(u_vector_name_, q_vector_name_) );
+  for( auto res : resolutions_ ){
+    observables_.push_back(uq_correlation/res*2.0);
+  }
 }
 
 std::vector<std::vector<std::pair<std::string, std::string>>> MethodOf3SE::ConstructResolutionCombinations(
@@ -50,7 +54,7 @@ Qn::DataContainer<Qn::StatCalculate> MethodOf3SE::ReadContainerFromFile( const s
     FileManager::GetObject<Qn::DataContainerStatCollect>(name);
   }
   auto result = Qn::DataContainerStatCalculate(*obj);
-  result.SetErrors(Qn::StatCalculate::ErrorType::BOOTSTRAP);
+  result.SetErrors(Qn::StatCalculate::ErrorType::PROPAGATION);
   return result;
 }
 

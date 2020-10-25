@@ -14,11 +14,11 @@
 
 class MethodOf3SE{
 public:
-  MethodOf3SE(const std::string &u_vector_name,
-              const std::string &q_vector_name, const std::string &component,
-              const std::vector<std::string> &resolution_q_vectors)
-      : u_vector_name_(u_vector_name), q_vector_name_(q_vector_name),
-        component_(component), resolution_q_vectors_(resolution_q_vectors) {}
+  MethodOf3SE(std::string u_vector_name,
+              std::string q_vector_name, std::string component,
+              std::vector<std::string> resolution_q_vectors)
+      : u_vector_name_(std::move(u_vector_name)), q_vector_name_(std::move(q_vector_name)),
+        component_(std::move(component)), resolution_q_vectors_(std::move(resolution_q_vectors)) {}
   virtual ~MethodOf3SE() = default;
   void CalculateObservables();
   void SetUqDirectory(const std::string &uq_deirectory) {
@@ -33,7 +33,12 @@ public:
   void Write(){
     int i=0;
     for( auto  resolution: resolutions_){
-      resolution.Write( std::data( "res_"+combinations_names_.at(i) ) );
+      resolution.Write( std::data( "res_"+combinations_names_.at(i)+"_"+component_ ) );
+      ++i;
+    }
+    i=0;
+    for(auto flow : observables_){
+      flow.Write( std::data( "flow_"+combinations_names_.at(i)+"_"+component_ ) );
       ++i;
     }
   }
@@ -51,6 +56,7 @@ private:
   std::vector<std::string> resolution_q_vectors_;
   std::vector<std::string> combinations_names_;
   std::vector<Qn::DataContainer<Qn::StatCalculate>> resolutions_;
+  std::vector<Qn::DataContainer<Qn::StatCalculate>> observables_;
 };
 
 #endif // OBSERVABLESCALCULATOR_SRC_METHOD_OF_3SE_H_
