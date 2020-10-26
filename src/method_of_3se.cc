@@ -17,7 +17,7 @@ void MethodOf3SE::CalculateObservables(){
     set_for_res_calc.push_back( ReadContainerFromFile( qq_directory_, res_combination_names.at(0) ) );
     set_for_res_calc.push_back( ReadContainerFromFile( qq_directory_,  res_combination_names.at(1) ) );
     set_for_res_calc.push_back( ReadContainerFromFile(  qq_directory_, res_combination_names.at(2) ) );
-    observables_names_.push_back( q_vectors_configs_.front().name+" ( "+res_combination_names.at(2).first.name+" , "+res_combination_names.at(2).second.name+" )" );
+    observables_names_.push_back( u_vector_config_.title+"."+q_vectors_configs_.front().title+"("+res_combination_names.at(2).first.title+","+res_combination_names.at(2).second.title+")" );
     resolutions_.push_back( CalculateResolution( set_for_res_calc ) );
   }
   auto uq_correlation = ReadContainerFromFile( uq_directory_, std::pair(u_vector_config_, q_vectors_configs_.front()) );

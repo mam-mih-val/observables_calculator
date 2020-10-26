@@ -15,6 +15,15 @@ Qn::DataContainer<Qn::StatCalculate> Method::ReadContainerFromFile( const std::s
   }
   auto result = Qn::DataContainerStatCalculate(*obj);
   result.SetErrors(Qn::StatCalculate::ErrorType::BOOTSTRAP);
+  for( const auto& axes : vectors.first.rebin_axes )
+    result=result.Rebin( axes );
+  for( const auto& axes : vectors.second.rebin_axes )
+    result=result.Rebin( axes );
+  auto projection = vectors.first.projection_axes;
+  for( const auto& axis : vectors.second.projection_axes )
+    if( std::count(projection.begin(), projection.end(), axis) > 0 )
+      projection.push_back(axis);
+  result.Projection(projection);
   return result;
 }
 

@@ -12,7 +12,10 @@
 
 struct VectorConfig {
   std::string name;
+  std::string title;
   std::string component_name;
+  std::vector<std::string> projection_axes;
+  std::vector<Qn::AxisD> rebin_axes;
 };
 
 class Method {
