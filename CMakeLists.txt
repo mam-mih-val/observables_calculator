@@ -26,6 +26,7 @@ link_directories(
 
 set(SOURCES
         src/file_manager.cc
+        src/method.cc
         src/method_of_3se.cc
         )
 
